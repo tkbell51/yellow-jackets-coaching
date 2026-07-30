@@ -1,87 +1,55 @@
-# Welcome to React Router!
+# Yellow Jackets Coaching
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Mobile-first coaching app foundation for the Yellow Jackets youth tackle football program. The MVP supports the program dashboard, protected app shell, roster management, attendance, 90-minute practice plans, sideline practice mode, Gold vs. Black E.A.T. points with undo, coaching notes, PWA installation, and IndexedDB sync queue infrastructure.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## Stack
 
-## Features
+React Router Framework Mode, TypeScript, Vite, Tailwind CSS, Supabase, Supabase Auth, PostgreSQL, Dexie, Zod, React Hook Form, Vitest, Playwright, and Netlify.
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## Setup
 
-## Getting Started
+1. Install dependencies: `npm install`
+2. Copy `.env.example` to `.env`
+3. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` when a Supabase project exists.
+4. Run locally: `npm run dev`
 
-### Installation
+The MVP includes a development sign-in shortcut with fictional coaches. Use `head.coach@example.com` on `/login`. When Supabase env vars are present, sign-in also calls Supabase Auth.
 
-Install the dependencies:
+## Supabase
 
-```bash
-npm install
-```
+Apply `supabase/migrations/0001_initial_schema.sql`, then use `supabase/seed/seed.sql` as a development starting point. Create Supabase Auth users separately and link them to `profiles` and `program_members`. Do not put the service-role key in browser env vars.
 
-### Development
+Required browser variables:
 
-Start the development server with HMR:
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
 
-```bash
-npm run dev
-```
+## Commands
 
-Your application will be available at `http://localhost:5173`.
+- `npm run dev`: start development server.
+- `npm run typecheck`: generate React Router types and run TypeScript.
+- `npm run lint`: run ESLint.
+- `npm run test`: run unit tests.
+- `npm run test:e2e`: run Playwright MVP flow.
+- `npm run build`: production build.
+- `npm run start`: serve the built React Router app.
 
-## Building for Production
+## Netlify
 
-Create a production build:
+`netlify.toml` uses `npm run build` and publishes `build/client`. Configure Supabase redirect URLs for the Netlify production URL and local development URL. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in Netlify environment variables.
 
-```bash
-npm run build
-```
+## PWA Testing
 
-## Deployment
+Run a production build and serve it, then open the app in Chrome or Safari. Confirm the manifest name is Yellow Jackets Coaching, the short name is Jackets, and install is offered without repeated prompts. Reload once, go offline, and confirm `/app` still opens from the service worker app shell.
 
-### Docker Deployment
+## Offline Testing
 
-To build and run using Docker:
+Open DevTools and switch Network to offline. Record attendance, award an E.A.T. point, or add a note. The UI updates immediately and the sync status shows local or pending work. Return online and use Sync Status to retry. Supabase sync requires valid env vars and applied migrations.
 
-```bash
-docker build -t my-app .
+## Current Limitations
 
-# Run the container
-docker run -p 3000:3000 my-app
-```
+Data is seeded in app code for the first usable MVP. Supabase schema, RLS, and client plumbing are present, but full cloud-backed CRUD and invite/password-reset flows need the Supabase project configured. Game-day snap counting is intentionally a Phase 3 foundation only.
 
-The containerized application can be deployed to any platform that supports Docker, including:
+## Recommended Phase 2
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+Connect route loaders/actions to Supabase, finish role-specific route guards, build depth chart and package editors, add coach assignment workflows, expand sync conflict handling, and add captain history screens.

@@ -1,13 +1,16 @@
-import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import { redirect } from "react-router";
 
-export function meta({}: Route.MetaArgs) {
+export function loader() {
+  throw redirect("/app");
+}
+
+export function meta() {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Yellow Jackets Coaching" },
+    { name: "description", content: "Mobile-first sideline tools for the Yellow Jackets youth tackle football program." },
   ];
 }
 
 export default function Home() {
-  return <Welcome />;
+  return null;
 }
