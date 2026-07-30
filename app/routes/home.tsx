@@ -1,8 +1,4 @@
-import { redirect } from "react-router";
-
-export function loader() {
-  throw redirect("/app");
-}
+import { Navigate } from "react-router";
 
 export function meta() {
   return [
@@ -12,5 +8,5 @@ export function meta() {
 }
 
 export default function Home() {
-  return null;
+  return <Navigate to="/app" replace />;
 }
